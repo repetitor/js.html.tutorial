@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login - vuejs - axios</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
+
+    <script src="./../env.js"></script>
+</head>
+<body>
+<div id="app-n">
+    {{ result }}
+</div>
+
+<script>
+    const vm = new Vue({
+        el: '#app-n',
+        data: {
+            result: null
+        },
+        mounted() {
+            axios.post(
+                JS_BACKEND_API + '/login',
+                {
+                    'email': JS_USER_EMAIL,
+                    'password': JS_USER_PASSWORD
+                },
+                {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            )
+                .then(response => {
+                    console.log(response.data);
+                    this.result = response.data.access_token;
+                });
+        }
+    });
+</script>
+</body>
+</html>
